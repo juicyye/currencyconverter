@@ -4,7 +4,6 @@ import hello.currencyconverter.application.common.service.port.LocalDateTimeHold
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -19,21 +18,21 @@ public class Currency {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    public static Currency create(CurrencyCreateDto currencyCreateDto, LocalDateTimeHolder localDateTimeHolder) {
+    public static Currency create(CurrencyCreate currencyCreate, LocalDateTimeHolder localDateTimeHolder) {
         return Currency.builder()
-                .code(currencyCreateDto.getCode())
-                .name(currencyCreateDto.getName())
-                .symbol(currencyCreateDto.getSymbol())
+                .code(currencyCreate.getCode())
+                .name(currencyCreate.getName())
+                .symbol(currencyCreate.getSymbol())
                 .createDate(localDateTimeHolder.localDateTime())
                 .updateDate(localDateTimeHolder.localDateTime())
                 .build();
     }
 
-    public Currency update(CurrencyUpdateDto currencyUpdateDto, LocalDateTimeHolder localDateTimeHolder) {
+    public Currency update(CurrencyUpdate currencyUpdate, LocalDateTimeHolder localDateTimeHolder) {
         return Currency.builder()
-                .code(currencyUpdateDto.getCode())
-                .name(currencyUpdateDto.getName())
-                .symbol(currencyUpdateDto.getSymbol())
+                .code(currencyUpdate.getCode())
+                .name(currencyUpdate.getName())
+                .symbol(currencyUpdate.getSymbol())
                 .createDate(createDate)
                 .updateDate(localDateTimeHolder.localDateTime())
                 .build();

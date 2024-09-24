@@ -15,14 +15,14 @@ class CurrencyTest {
     @DisplayName("CurrencyCreate로 Currency를 만들 수 있다")
     void currencyCreateToCurrencyTest() throws Exception {
         // given
-        CurrencyCreateDto currencyCreateDto = CurrencyCreateDto.builder()
+        CurrencyCreate currencyCreate = CurrencyCreate.builder()
                 .name("US 달러")
                 .code("USD")
                 .symbol("$")
                 .build();
 
         // when
-        Currency currency = Currency.create(currencyCreateDto,
+        Currency currency = Currency.create(currencyCreate,
                 new TestLocalDateTimeHolder(LocalDateTime.of(2024, 9, 23, 0, 43, 33)));
 
         // then

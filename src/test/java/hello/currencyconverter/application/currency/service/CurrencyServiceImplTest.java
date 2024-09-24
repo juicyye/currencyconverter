@@ -1,7 +1,7 @@
 package hello.currencyconverter.application.currency.service;
 
 import hello.currencyconverter.application.currency.domain.Currency;
-import hello.currencyconverter.application.currency.domain.CurrencyCreateDto;
+import hello.currencyconverter.application.currency.domain.CurrencyCreate;
 import hello.currencyconverter.application.mock.FakeCurrencyRepository;
 import hello.currencyconverter.application.mock.TestLocalDateTimeHolder;
 import org.junit.jupiter.api.Assertions;
@@ -32,8 +32,8 @@ class CurrencyServiceImplTest {
     @DisplayName("통화코드로 원하는 통화를 가져올 수 있다")
     void getByCode_test() throws Exception {
         // given
-        CurrencyCreateDto currencyCreateDto = getCurrencyCreateDto("usd", "us 달러", "$");
-        currencyServiceimpl.add(currencyCreateDto);
+        CurrencyCreate currencyCreate = getCurrencyCreateDto("usd", "us 달러", "$");
+        currencyServiceimpl.add(currencyCreate);
 
         // when
         Currency result = currencyServiceimpl.getByCode("usd");
@@ -52,11 +52,11 @@ class CurrencyServiceImplTest {
     @DisplayName("createDto를 이용하여 통화를 생성할 수 있다.")
     void add_test() throws Exception {
         // given
-        CurrencyCreateDto currencyCreateDto = getCurrencyCreateDto("usd", "us 달러", "$");
+        CurrencyCreate currencyCreate = getCurrencyCreateDto("usd", "us 달러", "$");
 
 
         // when
-        currencyServiceimpl.add(currencyCreateDto);
+        currencyServiceimpl.add(currencyCreate);
 
         // then
         List<Currency> results = currencyServiceimpl.getAll();
@@ -68,8 +68,8 @@ class CurrencyServiceImplTest {
 
 
 
-    private static CurrencyCreateDto getCurrencyCreateDto(String code, String name, String symbol) {
-        return CurrencyCreateDto.builder()
+    private static CurrencyCreate getCurrencyCreateDto(String code, String name, String symbol) {
+        return CurrencyCreate.builder()
                 .code(code)
                 .name(name)
                 .symbol(symbol)

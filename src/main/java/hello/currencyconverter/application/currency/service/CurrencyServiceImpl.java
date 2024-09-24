@@ -3,7 +3,7 @@ package hello.currencyconverter.application.currency.service;
 import hello.currencyconverter.application.common.service.port.LocalDateTimeHolder;
 import hello.currencyconverter.application.currency.controller.port.CurrencyService;
 import hello.currencyconverter.application.currency.domain.Currency;
-import hello.currencyconverter.application.currency.domain.CurrencyCreateDto;
+import hello.currencyconverter.application.currency.domain.CurrencyCreate;
 import hello.currencyconverter.application.currency.service.port.CurrencyRepository;
 import hello.currencyconverter.global.exception.CustomApiException;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Long add(CurrencyCreateDto currencyCreateDto) {
-        return currencyRepository.save(Currency.create(currencyCreateDto, localDateTimeHolder));
+    public Long add(CurrencyCreate currencyCreate) {
+        return currencyRepository.save(Currency.create(currencyCreate, localDateTimeHolder));
     }
 }
