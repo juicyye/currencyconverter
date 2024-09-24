@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "currency-Client")
+@FeignClient(name = "currency-Client", url = "https://www.koreaexim.go.kr" )
 public interface CurrencyClientImpl extends CurrencyClient {
 
     @Override
-    @GetMapping("https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey={apikey}={currentDate}&data=AP01")
+    @GetMapping("/site/program/financial/exchangeJSON?authkey={apikey}={currentDate}&data=AP01")
     List<CurrencyApiDto> getCurrencies(@PathVariable("apikey") String apiKey, @PathVariable("currentDate") String currentDate);
 
 }
