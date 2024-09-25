@@ -5,6 +5,7 @@ import hello.currencyconverter.application.exchangerates.controller.request.Exch
 import hello.currencyconverter.application.exchangerates.controller.response.ExchangeRateResponse;
 import hello.currencyconverter.application.exchangerates.domain.ExchangeRates;
 import hello.currencyconverter.global.dto.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,8 @@ public class ExchangeRateController {
 
 
     @GetMapping("/api/currency-converter")
-    public ResponseEntity<?> findCurrencyConverter(@RequestBody ExchangeRateRequest request) {
+    public ResponseEntity<?> findCurrencyConverter(@Valid @RequestBody ExchangeRateRequest request) {
         ExchangeRates rate = rateService.getRate(request);
         return new ResponseEntity<>(new ApiResponse<>(1, "환율 비교 성공", ExchangeRateResponse.from(rate,request.getAmount())), HttpStatus.OK);
-
     }
 }

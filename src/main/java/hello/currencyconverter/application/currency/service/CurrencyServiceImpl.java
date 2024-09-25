@@ -32,7 +32,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Long add(CurrencyCreate currencyCreate) {
+    public Currency add(CurrencyCreate currencyCreate) {
         return currencyRepository.save(Currency.create(currencyCreate, localDateTimeHolder));
     }
 }

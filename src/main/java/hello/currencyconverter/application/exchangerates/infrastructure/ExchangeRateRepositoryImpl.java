@@ -13,8 +13,8 @@ import java.util.Optional;
 public class ExchangeRateRepositoryImpl implements ExchangeRateRepository {
     private final ExchangeRateJpaRepository exchangeRateJpaRepository;
     @Override
-    public Long save(ExchangeRates exchangeRates) {
-        return exchangeRateJpaRepository.save(ExchangeRatesEntity.FromModel(exchangeRates)).getId();
+    public ExchangeRates save(ExchangeRates exchangeRates) {
+        return exchangeRateJpaRepository.save(ExchangeRatesEntity.FromModel(exchangeRates)).toModel();
     }
 
     public Optional<ExchangeRates> findLastExchangeRate(String baseCode, String targetCode) {

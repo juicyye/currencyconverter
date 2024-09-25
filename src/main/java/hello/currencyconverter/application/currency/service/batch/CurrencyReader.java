@@ -3,6 +3,7 @@ package hello.currencyconverter.application.currency.service.batch;
 import hello.currencyconverter.application.common.service.port.LocalDateHolder;
 import hello.currencyconverter.application.currency.infrastructure.dto.CurrencyApiDto;
 import hello.currencyconverter.application.currency.service.port.CurrencyClient;
+import hello.currencyconverter.global.util.LocalDateFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.*;
@@ -24,7 +25,7 @@ public class CurrencyReader implements ItemStreamReader<CurrencyApiDto> {
 
     @Override
     public void open(ExecutionContext executionContext) throws ItemStreamException {
-        Iterator<CurrencyApiDto> iterator = currencyClient.getCurrencies(apiKey, localDateHolder.localDate().toString()).iterator();
+        iterator = currencyClient.getCurrencies(apiKey, LocalDateFormatter.formatter(localDateHolder.localDate())).iterator();
         if (executionContext.containsKey(CURRENT_KEY)) {
             currentNumber = executionContext.getInt(CURRENT_KEY);
         }
@@ -35,9 +36,10 @@ public class CurrencyReader implements ItemStreamReader<CurrencyApiDto> {
 
     @Override
     public CurrencyApiDto read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        if(iterator != null && iterator.hasNext()) {
+        CurrencyApiDto dto = iterator.next();
+        if(dto != null && dto.getResult() == 1) {
             currentNumber++;
-            return iterator.next();
+            return dto;
 
         }
         return null;

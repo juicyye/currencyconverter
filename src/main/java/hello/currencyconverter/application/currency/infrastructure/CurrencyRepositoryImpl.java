@@ -14,8 +14,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     private final CurrencyJpaRepository currencyJpaRepository;
 
     @Override
-    public Long save(Currency currency) {
-        return currencyJpaRepository.save(CurrencyEntity.fromModel(currency)).getId();
+    public Currency save(Currency currency) {
+        return currencyJpaRepository.save(CurrencyEntity.fromModel(currency)).toModel();
     }
 
     @Override

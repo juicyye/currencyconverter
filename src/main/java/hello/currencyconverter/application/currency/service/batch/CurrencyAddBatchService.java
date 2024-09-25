@@ -2,14 +2,10 @@ package hello.currencyconverter.application.currency.service.batch;
 
 import hello.currencyconverter.application.common.service.port.LocalDateHolder;
 import hello.currencyconverter.application.common.service.port.LocalDateTimeHolder;
-import hello.currencyconverter.application.currency.domain.Currency;
 import hello.currencyconverter.application.currency.infrastructure.dto.CurrencyApiDto;
 import hello.currencyconverter.application.currency.service.port.CurrencyClient;
 import hello.currencyconverter.application.currency.service.port.CurrencyRepository;
-import hello.currencyconverter.application.exchangerates.domain.ExchangeRates;
 import hello.currencyconverter.application.exchangerates.service.port.ExchangeRateRepository;
-import hello.currencyconverter.global.exception.CustomApiException;
-import hello.currencyconverter.global.util.Constraint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

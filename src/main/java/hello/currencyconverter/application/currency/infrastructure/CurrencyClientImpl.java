@@ -12,7 +12,7 @@ import java.util.List;
 public interface CurrencyClientImpl extends CurrencyClient {
 
     @Override
-    @GetMapping("/site/program/financial/exchangeJSON?authkey={apikey}={currentDate}&data=AP01")
+    @GetMapping("/site/program/financial/exchangeJSON?authkey={apikey}&searchdate={currentDate}&data=AP01")
     List<CurrencyApiDto> getCurrencies(@PathVariable("apikey") String apiKey, @PathVariable("currentDate") String currentDate);
 
 }

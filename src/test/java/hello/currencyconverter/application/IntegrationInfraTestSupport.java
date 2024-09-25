@@ -2,6 +2,7 @@ package hello.currencyconverter.application;
 
 import hello.currencyconverter.application.currency.infrastructure.CurrencyJpaRepository;
 import hello.currencyconverter.application.exchangerates.infrastructure.ExchangeRateJpaRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,4 +16,7 @@ public class IntegrationInfraTestSupport {
 
     @Autowired
     protected CurrencyJpaRepository currencyRepository;
+
+    @Autowired
+    protected EntityManager em;
 }

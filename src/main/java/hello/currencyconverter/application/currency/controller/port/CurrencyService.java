@@ -9,5 +9,5 @@ public interface CurrencyService {
 
     Currency getByCode(String code);
     List<Currency> getAll();
-    Long add(CurrencyCreate currencyCreate);
+    Currency add(CurrencyCreate currencyCreate);
 }

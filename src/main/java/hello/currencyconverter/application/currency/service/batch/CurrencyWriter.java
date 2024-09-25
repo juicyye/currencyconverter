@@ -22,11 +22,13 @@ public class CurrencyWriter implements ItemWriter<CurrencyApiDto> {
     public void write(Chunk<? extends CurrencyApiDto> chunk) throws Exception {
 
         for (CurrencyApiDto currencyApiDto : chunk) {
+
             Currency targetCurrency = currencyApiDto.toCurrency(localDateTimeHolder);
             Currency baseCurrency = currencyRepository.findByCode(Constraint.KOREA_CODE).orElseThrow(() -> new CustomApiException("원화가 저장이 안되어있습니다."));
-            currencyRepository.save(targetCurrency);
+            currencyRepository.findByCode(targetCurrency.getCode()).orElseGet(() -> currencyRepository.save(targetCurrency));
             ExchangeRates exchangeRates = currencyApiDto.toExchangeRates(localDateTimeHolder, baseCurrency, targetCurrency);
             exchangeRateRepository.save(exchangeRates);
+
 
         }
 

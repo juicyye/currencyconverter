@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class ApiResponse<T> {
 
     private final Integer code;  // 성공 1, 실패 -1

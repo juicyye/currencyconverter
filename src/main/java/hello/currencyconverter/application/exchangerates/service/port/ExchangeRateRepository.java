@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ExchangeRateRepository {
 
-    Long save(ExchangeRates exchangeRates);
+    ExchangeRates save(ExchangeRates exchangeRates);
     Optional<ExchangeRates> findLastExchangeRate(String baseCode, String targetCode);
     List<ExchangeRates> findAllExchangeRates(String baseCode, String targetCode);
 

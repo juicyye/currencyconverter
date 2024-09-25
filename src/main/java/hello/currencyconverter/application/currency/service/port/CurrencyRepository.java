@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CurrencyRepository {
 
-    Long save(Currency currency);
+    Currency save(Currency currency);
     Optional<Currency> findByCode(String currencyCode);
     List<Currency> findAll();
 
