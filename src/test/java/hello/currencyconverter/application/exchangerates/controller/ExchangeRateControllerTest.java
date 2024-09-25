@@ -55,6 +55,82 @@ class ExchangeRateControllerTest extends IntegrationConTestSupport {
         // then
     }
 
+    @Test
+    @DisplayName("baseCurrencyCode 값을 집어넣지 않으면 valid 오류가 생긴다")
+    void baseCurrencyCodeEmpty() throws Exception {
+        // given
+        double rate = 1200.20;
+        double amount = 1000;
+        Currency baseCurrency = createCurrency("원화", "krw", "|", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        Currency targetCurrency = createCurrency("us 달러", "usd", "$", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        ExchangeRateRequest exchangeRateRequest = new ExchangeRateRequest("",targetCurrency.getCode(),amount);
+        BDDMockito.given(exchangeRateService.getRate(any())).willReturn(createExchangeRates(baseCurrency,targetCurrency, rate));
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/currency-converter")
+                        .content(mapper.writeValueAsString(exchangeRateRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(-1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("기준이 되는 국가를 작성해주세요"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty())
+
+        ;
+
+        // then
+    }
+
+    @Test
+    @DisplayName("targetCurrency 값을 집어넣지 않으면 valid 오류가 생긴다")
+    void targetCurrencyEmpty() throws Exception {
+        // given
+        double rate = 1200.20;
+        double amount = 1000;
+        Currency baseCurrency = createCurrency("원화", "krw", "|", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        Currency targetCurrency = createCurrency("us 달러", "usd", "$", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        ExchangeRateRequest exchangeRateRequest = new ExchangeRateRequest(baseCurrency.getCode(),"",amount);
+        BDDMockito.given(exchangeRateService.getRate(any())).willReturn(createExchangeRates(baseCurrency,targetCurrency, rate));
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/currency-converter")
+                        .content(mapper.writeValueAsString(exchangeRateRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(-1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("원하시는 국가를 작성해주세요"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty())
+
+        ;
+
+        // then
+    }
+
+    @Test
+    @DisplayName("amount 값이 양수여야 한다")
+    void amountNative() throws Exception {
+        // given
+        double rate = 1200.20;
+        double amount = -1;
+        Currency baseCurrency = createCurrency("원화", "krw", "|", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        Currency targetCurrency = createCurrency("us 달러", "usd", "$", LocalDateTime.of(2024, 9, 25, 14, 42, 55), LocalDateTime.of(2024, 9, 25, 14, 42, 55));
+        ExchangeRateRequest exchangeRateRequest = new ExchangeRateRequest(baseCurrency.getCode(),targetCurrency.getCode(),amount);
+        BDDMockito.given(exchangeRateService.getRate(any())).willReturn(createExchangeRates(baseCurrency,targetCurrency, rate));
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/currency-converter")
+                        .content(mapper.writeValueAsString(exchangeRateRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(-1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("0이상 값만 작성해주세요"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty())
+
+        ;
+
+        // then
+    }
+
+
     private static ExchangeRates createExchangeRates(Currency baseCurrency, Currency targetCurrency, double exchangeRate) {
         return ExchangeRates.builder()
                 .exchangeRate(exchangeRate)

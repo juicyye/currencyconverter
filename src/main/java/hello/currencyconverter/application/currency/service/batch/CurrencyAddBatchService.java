@@ -1,5 +1,7 @@
 package hello.currencyconverter.application.currency.service.batch;
 
+import feign.FeignException;
+import feign.RetryableException;
 import hello.currencyconverter.application.common.service.port.LocalDateHolder;
 import hello.currencyconverter.application.common.service.port.LocalDateTimeHolder;
 import hello.currencyconverter.application.currency.infrastructure.dto.CurrencyApiDto;
@@ -16,6 +18,8 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.backoff.BackOffPolicy;
+import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
@@ -43,7 +47,22 @@ public class CurrencyAddBatchService {
                 .<CurrencyApiDto, CurrencyApiDto>chunk(10, transactionManager)
                 .reader(currencyReader())
                 .writer(currencyWriter())
+                .faultTolerant()
+                .retryLimit(3)
+                .retry(RetryableException.class)
+                .retry(FeignException.class)
+                .retry(Exception.class)
+                .backOffPolicy(backOffPolicy())
                 .build();
+    }
+
+    @Bean
+    public BackOffPolicy backOffPolicy(){
+        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        backOffPolicy.setInitialInterval(1000); // 1초 대기 후 재시도
+        backOffPolicy.setMaxInterval(10000); // 최대 10초까지 대기 시간 증가
+        backOffPolicy.setMultiplier(2.0); // 재시도 시 대기 시간이 두 배로 증가
+        return backOffPolicy;
     }
 
     @Bean

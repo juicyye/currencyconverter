@@ -10,13 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Getter
 public class CurrencyEntity extends BaseEntity {
 
@@ -26,8 +27,14 @@ public class CurrencyEntity extends BaseEntity {
     private String code;
     private String name;
     private String symbol;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+
+    public CurrencyEntity(BaseEntityBuilder<?, ?> b, Long id, String code, String name, String symbol) {
+        super(b);
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.symbol = symbol;
+    }
 
     public static CurrencyEntity fromModel(Currency currency) {
         return CurrencyEntity.builder()

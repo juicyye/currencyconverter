@@ -1,6 +1,5 @@
 package hello.currencyconverter.global.util;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
