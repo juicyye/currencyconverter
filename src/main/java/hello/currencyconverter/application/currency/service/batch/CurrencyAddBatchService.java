@@ -57,15 +57,7 @@ public class CurrencyAddBatchService {
 
     @Bean
     public ItemWriter<CurrencyApiDto> currencyWriter(){
-        return item -> {
-            for (CurrencyApiDto currencyApiDto : item) {
-                Currency targetCurrency = currencyApiDto.toCurrency(localDateTimeHolder);
-                Currency baseCurrency = currencyRepository.findByCode(Constraint.KOREA_CODE).orElseThrow(() -> new CustomApiException("원화가 저장이 안되어있습니다."));
-                ExchangeRates exchangeRates = currencyApiDto.toExchangeRates(localDateTimeHolder, baseCurrency, targetCurrency);
-                exchangeRateRepository.save(exchangeRates);
-                currencyRepository.save(targetCurrency);
-            }
-        };
+        return new CurrencyWriter(localDateTimeHolder, currencyRepository, exchangeRateRepository);
     }
 
 

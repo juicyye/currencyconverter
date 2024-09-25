@@ -2,7 +2,6 @@ package hello.currencyconverter.application.currency.infrastructure;
 
 import hello.currencyconverter.application.currency.domain.Currency;
 import hello.currencyconverter.application.currency.service.port.CurrencyRepository;
-import hello.currencyconverter.global.exception.CustomApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

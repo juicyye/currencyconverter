@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.*;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j

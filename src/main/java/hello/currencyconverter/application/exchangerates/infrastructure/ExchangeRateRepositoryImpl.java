@@ -1,9 +1,7 @@
 package hello.currencyconverter.application.exchangerates.infrastructure;
 
-import hello.currencyconverter.application.currency.domain.Currency;
 import hello.currencyconverter.application.exchangerates.domain.ExchangeRates;
 import hello.currencyconverter.application.exchangerates.service.port.ExchangeRateRepository;
-import hello.currencyconverter.global.exception.CustomApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

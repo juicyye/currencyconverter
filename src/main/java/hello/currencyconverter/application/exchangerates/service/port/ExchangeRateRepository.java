@@ -1,6 +1,5 @@
 package hello.currencyconverter.application.exchangerates.service.port;
 
-import hello.currencyconverter.application.currency.domain.Currency;
 import hello.currencyconverter.application.exchangerates.domain.ExchangeRates;
 
 import java.util.List;
